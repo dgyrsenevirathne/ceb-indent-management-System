@@ -2,8 +2,17 @@ let currentPage = 1;
 const recordsPerPage = 10; // Number of records to display per page
 let allIndents = []; // Store all indents for filtering and pagination
 
+// Debounce function to limit the rate at which a function can fire
+function debounce(func, delay) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
 // Search and filter functionality
-document.getElementById('filterButton').addEventListener('click', function () {
+const filterIndents = () => {
     const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase(); // Trim spaces and convert to lowercase
     const filteredIndents = allIndents.filter(indent => {
         const indentNo = indent.IndentNo ? indent.IndentNo.toLowerCase().trim() : '';
@@ -11,7 +20,13 @@ document.getElementById('filterButton').addEventListener('click', function () {
     });
     displayIndents(filteredIndents, 1); // Reset to first page
     setupPagination(filteredIndents.length);
-});
+};
+
+// Use debounce to limit the filter function calls
+const debouncedFilterIndents = debounce(filterIndents, 300); // 300ms delay
+
+document.getElementById('filterButton').addEventListener('click', debouncedFilterIndents);
+document.getElementById('searchInput').addEventListener('input', debouncedFilterIndents); // Call filter on input
 
 // Export to Excel functionality
 document.getElementById('exportExcelButton').addEventListener('click', function () {
