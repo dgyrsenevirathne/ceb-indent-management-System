@@ -60,8 +60,11 @@ th {
     font-weight: bold;
 }
 
-/* Button Styling for Table Actions */
-button {
+/* Button Styling for Edit and Delete Actions */
+button.edit {
+    background-color: #4CAF50;
+    /* Green for edit */
+    color: white;
     font-size: 12px;
     /* Smaller font size for compact buttons */
     padding: 5px 10px;
@@ -74,25 +77,40 @@ button {
     transition: all 0.3s ease;
 }
 
-button:hover {
-    opacity: 0.9;
-    /* Subtle hover effect */
+button.edit:hover {
+    background-color: #45a049;
+    /* Darker green on hover */
 }
 
-button:active {
+button.edit:active {
     transform: translateY(1px);
-}
-
-button.edit {
-    background-color: #4CAF50;
-    /* Green for edit */
-    color: white;
+    /* Slightly move down on click */
 }
 
 button.delete {
     background-color: #f44336;
     /* Red for delete */
     color: white;
+    font-size: 12px;
+    /* Smaller font size for compact buttons */
+    padding: 5px 10px;
+    /* Adjust padding */
+    margin: 2px;
+    /* Add space between buttons */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button.delete:hover {
+    background-color: #e53935;
+    /* Darker red on hover */
+}
+
+button.delete:active {
+    transform: translateY(1px);
+    /* Slightly move down on click */
 }
 
 /* Responsive Table */

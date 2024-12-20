@@ -46,8 +46,8 @@ function displayIndents(indents, page) {
             <td>${indent.Item}</td>
             <td>${indent.Supplier}</td>
             <td>
-                <button onclick="window.location.href='edit.html?indentNo=${encodeURIComponent(indent.IndentNo)}'">Edit</button>
-                <button onclick="deleteIndent('${indent.IndentNo}')">Delete</button>
+                <button class="edit" onclick="window.location.href='edit.html?indentNo=${encodeURIComponent(indent.IndentNo)}'">Edit</button>
+<button class="delete" onclick="deleteIndent('${indent.IndentNo}')">Delete</button>
             </td>
         `;
         tableBody.appendChild(row);
