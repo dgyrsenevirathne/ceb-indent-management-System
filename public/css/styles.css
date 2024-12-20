@@ -1,0 +1,127 @@
+/* CSS Styles for the Form */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    /* Set a max width for larger screens */
+    margin: 50px auto;
+    /* Center the container with some top margin */
+    background: #fff;
+    padding: 30px;
+    /* Increased padding for a more spacious feel */
+    border-radius: 8px;
+    /* Slightly larger border radius */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    /* Deeper shadow for a floating effect */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    /* Darker color for better contrast */
+    margin-bottom: 20px;
+    /* More space below the heading */
+}
+
+label {
+    display: block;
+    margin: 15px 0 5px;
+    /* Increased margin for better spacing */
+    font-weight: bold;
+    /* Bold labels for emphasis */
+    color: #555;
+    /* Slightly darker color for labels */
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    /* Increased padding for comfort */
+    margin-bottom: 15px;
+    /* More space between inputs */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* Ensures padding is included in width */
+    transition: border-color 0.3s;
+    /* Smooth transition for focus effect */
+}
+
+input:focus,
+select:focus {
+    border-color: #007BFF;
+    /* Change border color on focus */
+    outline: none;
+    /* Remove default outline */
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    /* Increased padding for the button */
+    background: #5cb85c;
+    /* Green background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    /* Larger font size for better readability */
+    transition: background 0.3s;
+    /* Smooth transition for hover effect */
+}
+
+button:hover {
+    background: #4cae4c;
+    /* Darker green on hover */
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+        /* Full width on smaller screens */
+    }
+}
+
+nav {
+    background-color: #007BFF;
+    /* Blue background */
+    padding: 10px;
+    /* Padding around the nav */
+}
+
+nav ul {
+    list-style-type: none;
+    /* Remove bullet points */
+    padding: 0;
+    /* Remove default padding */
+}
+
+nav ul li {
+    display: inline;
+    /* Display items in a line */
+    margin-right: 20px;
+    /* Space between items */
+}
+
+nav ul li a {
+    color: white;
+    /* White text color */
+    text-decoration: none;
+    /* Remove underline */
+    font-weight: bold;
+    /* Bold text */
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    /* Underline on hover */
+}

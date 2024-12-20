@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Indent</title>
+    <link rel="stylesheet" href="css/edit.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <form id="editIndentForm">
+        <div>
+            <label for="editMonth">Month</label>
+            <input type="text" id="editMonth" name="month" placeholder="Month">
+        </div>
+        <div>
+            <label for="editCurrency">Currency</label>
+            <input type="text" id="editCurrency" name="currency" placeholder="Currency">
+        </div>
+        <div>
+            <label for="editBaseValue">Base Value</label>
+            <input type="number" id="editBaseValue" name="baseValue" placeholder="Base Value">
+        </div>
+        <div>
+            <label for="editHarringAndTransport">Harring and Transport</label>
+            <input type="number" id="editHarringAndTransport" name="harringAndTransport"
+                placeholder="Harring and Transport">
+        </div>
+        <div>
+            <label for="editVat">VAT</label>
+            <input type="number" id="editVat" name="vat" placeholder="VAT">
+        </div>
+        <div>
+            <label for="editNat">NAT</label>
+            <input type="number" id="editNat" name="nat" placeholder="NAT">
+        </div>
+        <div>
+            <label for="editAdvance">Advance</label>
+            <input type="number" id="editAdvance" name="advance" placeholder="Advance">
+        </div>
+        <div>
+            <label for="editReimbursement">Reimbursement</label>
+            <input type="number" id="editReimbursement" name="reimbursement" placeholder="Reimbursement">
+        </div>
+        <div>
+            <label for="editCommission">Commission</label>
+            <input type="number" id="editCommission" name="commission" placeholder="Commission">
+        </div>
+        <div>
+            <label for=" editComplexRef">Complex Reference</label>
+            <input type="text" id="editComplexRef" name="complexRef" placeholder="Complex Reference">
+        </div>
+        <div>
+            <label for="editItem">Item</label>
+            <input type="text" id="editItem" name="item" placeholder="Item">
+        </div>
+        <div>
+            <label for="editSupplier">Supplier</label>
+            <input type="text" id="editSupplier" name="supplier" placeholder="Supplier">
+        </div>
+        <button type="submit">Update Indent</button>
+    </form>
+
+    <script>
+        // Function to fetch indent details and populate the form
+        function fetchIndentDetails(indentNo) {
+            fetch(`/get-indents/${encodeURIComponent(indentNo)}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to fetch indent details');
+                    return response.json();
+                })
+                .then(indent => {
+                    // Populate the form with indent details
+                    document.getElementById('editMonth').value = indent.Month;
+                    document.getElementById('editCurrency').value = indent.Currency;
+                    document.getElementById('editBaseValue').value = indent.BaseValue;
+                    document.getElementById('editHarringAndTransport').value = indent.HarringAndTransport;
+                    document.getElementById('editVat').value = indent.VAT;
+                    document.getElementById('editNat').value = indent.NAT;
+                    document.getElementById('editAdvance').value = indent.Advance;
+                    document.getElementById('editReimbursement').value = indent.Reimbursement;
+                    document.getElementById('editCommission').value = indent.Commission;
+                    document.getElementById('editComplexRef').value = indent.ComplexRef;
+                    document.getElementById('editItem').value = indent.Item;
+                    document.getElementById('editSupplier').value = indent.Supplier;
+                })
+                .catch(error => {
+                    console.error('Error fetching indent:', error);
+                    alert('There was an error fetching the indent details: ' + error.message);
+                });
+        }
+
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const indentNo = urlParams.get('indentNo'); // Get the indent number from the URL
+
+            if (indentNo) {
+                fetchIndentDetails(indentNo); // Call the function to fetch indent details
+            } else {
+                console.error('No indent number provided in the URL.');
+            }
+        });
+
+        // Handle form submission to update the indent
+        document.getElementById('editIndentForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const indentNo = new URLSearchParams(window.location.search).get('indentNo').trim(); // Get the indent number from the URL and trim spaces
+            const formData = new FormData(this);
+
+            // Convert FormData to JSON
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch(`/update-indent/${encodeURIComponent(indentNo)}`, { // Use encodeURIComponent to handle special characters
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to update indent');
+                    alert('Indent updated successfully!');
+                    window.location.href = 'dashboard.html'; // Redirect to dashboard after update
+                })
+                .catch(error => {
+                    console.error('Error updating indent:', error);
+                    alert('There was an error updating the indent: ' + error.message);
+                });
+        });
+    </script>
+</body>
+
+</html>

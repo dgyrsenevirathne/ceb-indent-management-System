@@ -1,0 +1,277 @@
+/* dashboard.css */
+
+/* General Styles for the Dashboard */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    /* Add this to enable horizontal scroll when needed */
+}
+
+
+h1 {
+    text-align: center;
+    color: #333;
+    /* Darker color for better contrast */
+    margin-bottom: 20px;
+    /* More space below the heading */
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: auto;
+    /* Adjust column widths based on content */
+}
+
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    /* Maintain consistent padding */
+    text-align: left;
+    font-size: 14px;
+    overflow: hidden;
+    /* Hide overflow content */
+    text-overflow: ellipsis;
+    /* Add ellipsis for long content */
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Button Styling for Table Actions */
+button {
+    font-size: 12px;
+    /* Smaller font size for compact buttons */
+    padding: 5px 10px;
+    /* Adjust padding */
+    margin: 2px;
+    /* Add space between buttons */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+    /* Subtle hover effect */
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button.edit {
+    background-color: #4CAF50;
+    /* Green for edit */
+    color: white;
+}
+
+button.delete {
+    background-color: #f44336;
+    /* Red for delete */
+    color: white;
+}
+
+/* Responsive Table */
+@media (max-width: 600px) {
+    table {
+        font-size: 12px;
+        /* Adjust font size for small screens */
+    }
+
+    th,
+    td {
+        padding: 8px;
+        /* Slightly more padding to avoid content overflow */
+    }
+
+    button {
+        font-size: 10px;
+        /* Smaller buttons for compact view */
+        padding: 3px 8px;
+    }
+}
+
+
+
+/* Navigation Styles */
+nav {
+    background-color: #007BFF;
+    /* Blue background */
+    padding: 10px;
+    /* Padding around the nav */
+}
+
+nav ul {
+    list-style-type: none;
+    /* Remove bullet points */
+    padding: 0;
+    /* Remove default padding */
+    text-align: center;
+    /* Center the navigation items */
+}
+
+nav ul li {
+    display: inline;
+    /* Display items in a line */
+    margin-right: 20px;
+    /* Space between items */
+}
+
+nav ul li a {
+    color: white;
+    /* White text color */
+    text-decoration: none;
+    /* Remove underline */
+    font-weight: bold;
+    /* Bold text */
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    /* Underline on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+        /* Full width on smaller screens */
+    }
+
+    nav ul li {
+        display: block;
+        /* Stack navigation items on smaller screens */
+        margin-bottom: 10px;
+        /* Space between stacked items */
+    }
+}
+
+#exportCSVButton,
+#exportExcelButton {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#exportCSVButton {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#exportExcelButton {
+    background-color: #217346;
+    /* Microsoft Excel green color */
+    color: white;
+}
+
+/* Hover effects */
+#exportCSVButton:hover {
+    background-color: #45a049;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#exportExcelButton:hover {
+    background-color: #1e6b3f;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Active state */
+#exportCSVButton:active,
+#exportExcelButton:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Disabled state */
+#exportCSVButton:disabled,
+#exportExcelButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Search input styling */
+#searchInput {
+    padding: 10px 15px;
+    width: 300px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    transition: border-color 0.3s ease;
+    background-color: #fff;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #2196F3;
+    box-shadow: 0 0 5px rgba(33, 150, 243, 0.2);
+}
+
+#searchInput::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Filter button styling */
+#filterButton {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#filterButton:hover {
+    background-color: #0d8aee;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#filterButton:active {
+    transform: translateY(1px);
+    background-color: #0c7cd5;
+}
+
+/* For a responsive layout */
+@media screen and (max-width: 600px) {
+    #searchInput {
+        width: calc(100% - 30px);
+        margin-bottom: 10px;
+    }
+
+    #filterButton {
+        width: 100%;
+    }
+}

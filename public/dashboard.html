@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indent Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css"> <!-- Link to the new CSS file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html">Indent Dashboard</a></li>
+            <!-- Other links -->
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Indent Dashboard</h1>
+        <input type="text" id="searchInput" placeholder="Search by Indent No or Supplier" />
+        <button id="filterButton">Filter</button>
+        <div id="pagination"></div></br>
+        <button id="exportExcelButton">Export to Excel</button>
+        <table id="indentTable">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Indent No</th>
+                    <th>Currency</th>
+                    <th>Base Value</th>
+                    <th>Harring and Transport</th>
+                    <th>VAT</th>
+                    <th>NAT</th>
+                    <th>Advance</th>
+                    <th>Reimbursement</th>
+                    <th>Commission</th>
+                    <th>Total</th>
+                    <th>Complex Reference</th>
+                    <th>Item</th>
+                    <th>Supplier</th>
+                    <th>Actions</th> <!-- New Actions column for Edit/Delete -->
+                </tr>
+            </thead>
+            <tbody id="indentTableBody">
+                <!-- Data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+/* General form styling */
+#editIndentForm {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Label styling */
+#editIndentForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Input styling */
+#editIndentForm input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Input focus effects */
+#editIndentForm input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Button styling */
+#saveButton {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Button hover effects */
+#saveButton:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Button active effects */
+#saveButton:active {
+    background-color: #003f7f;
+    transform: translateY(0);
+}
+
+/* Align text for placeholders */
+#editIndentForm input::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Add some spacing between input elements */
+#editIndentForm div {
+    margin-bottom: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    #editIndentForm {
+        padding: 15px;
+    }
+
+    #saveButton {
+        font-size: 14px;
+    }
+}
