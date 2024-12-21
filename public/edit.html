@@ -23,31 +23,38 @@
         <div>
             <label for="editBaseValue">Base Value</label>
             <input type="number" id="editBaseValue" name="baseValue" placeholder="Base Value" step="0.01">
+            <button type="button" onclick="incrementValue('editBaseValue', 1)">+</button>
         </div>
         <div>
             <label for="editHarringAndTransport">Harring and Transport</label>
             <input type="number" id="editHarringAndTransport" name="harringAndTransport"
                 placeholder="Harring and Transport" step="0.01">
+            <button type="button" onclick="incrementValue('editHarringAndTransport', 1)">+</button>
         </div>
         <div>
             <label for="editVat">VAT</label>
             <input type="number" id="editVat" name="vat" placeholder="VAT" step="0.01">
+            <button type="button" onclick="incrementValue('editVat', 1)">+</button>
         </div>
         <div>
             <label for="editNat">NAT</label>
             <input type="number" id="editNat" name="nat" placeholder="NAT" step="0.01">
+            <button type="button" onclick="incrementValue('editNat', 1)">+</button>
         </div>
         <div>
             <label for="editAdvance">Advance</label>
             <input type="number" id="editAdvance" name="advance" placeholder="Advance" step="0.01">
+            <button type="button" onclick="incrementValue('editAdvance', 1)">+</button>
         </div>
         <div>
             <label for="editReimbursement">Reimbursement</label>
             <input type="number" id="editReimbursement" name="reimbursement" placeholder="Reimbursement" step="0.01">
+            <button type="button" onclick="incrementValue('editReimbursement', 1)">+</button>
         </div>
         <div>
             <label for="editCommission">Commission</label>
             <input type="number" id="editCommission" name="commission" placeholder="Commission" step="0.01">
+            <button type="button" onclick="incrementValue('editCommission', 1)">+</button>
         </div>
         <div>
             <label for=" editComplexRef">Complex Reference</label>
@@ -65,6 +72,12 @@
     </form>
 
     <script>
+        function incrementValue(inputId, increment) {
+            const inputField = document.getElementById(inputId);
+            const currentValue = parseFloat(inputField.value) || 0; // Get current value or default to 0
+            inputField.value = (currentValue + increment).toFixed(2); // Increment and set the new value
+        }
+
         // Function to fetch indent details and populate the form
         function fetchIndentDetails(indentNo) {
             fetch(`/get-indents/${encodeURIComponent(indentNo)}`)
