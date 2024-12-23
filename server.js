@@ -125,10 +125,10 @@ app.get('/get-indents', async (req, res) => {
         const searchQuery = `%${searchTerm}%`;
 
         const query = `
-            SELECT * FROM [IndentManagement].[dbo].[IndentDetails]
-            WHERE CONCAT(IndentNo, Month, Item, Supplier) LIKE ?
-            ORDER BY [IndentNo] OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
-        `;
+    SELECT * FROM [IndentManagement].[dbo].[IndentDetails]
+    WHERE [IsDeleted] = 0 AND CONCAT(IndentNo, Month, Item, Supplier) LIKE ?
+    ORDER BY [IndentNo] OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+`;
         const results = await executeQuery(sqlConfig.connectionString, query, [searchQuery, offset, limit]);
         res.json(results);
     } catch (err) {
@@ -156,6 +156,20 @@ app.get('/get-indents/:indentNo', async (req, res) => {
     } catch (err) {
         console.error('Error fetching indent:', err);
         res.status(500).send({ error: 'Failed to fetch indent details' });
+    }
+});
+
+app.get('/get-deleted-indents', async (req, res) => {
+    try {
+        const query = `
+            SELECT * FROM [IndentManagement].[dbo].[IndentDetails]
+            WHERE [IsDeleted] = 1
+        `;
+        const results = await executeQuery(sqlConfig.connectionString, query);
+        res.json(results);
+    } catch (err) {
+        console.error('Error fetching deleted indents:', err);
+        res.status(500).json({ message: 'Error fetching deleted indents' });
     }
 });
 
@@ -187,7 +201,7 @@ app.put('/update-indent/:indentNo', async (req, res) => {
     }
 });
 
-// Delete an indent
+// Delete an indent (soft delete)
 app.delete('/delete-indent/:indentNo', async (req, res) => {
     try {
         const indentNo = req.params.indentNo.trim(); // Trim the indent number
@@ -195,8 +209,8 @@ app.delete('/delete-indent/:indentNo', async (req, res) => {
         // Log the indent number received
         console.log(`Received request to delete indent: ${indentNo}`);
 
-        // Check if the record exists before deleting
-        const checkQuery = 'SELECT COUNT(*) AS count FROM [IndentManagement].[dbo].[IndentDetails] WHERE [IndentNo] = ?';
+        // Check if the record exists before marking as deleted
+        const checkQuery = 'SELECT COUNT(*) AS count FROM [IndentManagement].[dbo].[IndentDetails] WHERE [IndentNo] = ? AND [IsDeleted] = 0';
         const checkResult = await executeQuery(sqlConfig.connectionString, checkQuery, [indentNo]);
 
         // Log the check result
@@ -208,23 +222,23 @@ app.delete('/delete-indent/:indentNo', async (req, res) => {
             return res.status(404).json({ message: 'Indent not found' });
         }
 
-        // SQL query to delete the indent
-        const query = 'DELETE FROM [IndentManagement].[dbo].[IndentDetails] WHERE [IndentNo] = ?';
+        // SQL query to mark the indent as deleted
+        const query = 'UPDATE [IndentManagement].[dbo].[IndentDetails] SET [IsDeleted] = 1 WHERE [IndentNo] = ?';
         console.log(`Executing query: ${query} with parameters: ${[indentNo]}`);
 
         const result = await executeQuery(sqlConfig.connectionString, query, [indentNo]);
 
         // Log the result to see what is returned
-        console.log('Delete result:', result);
+        console.log('Soft delete result:', result);
 
-        // Check if the indent was found and deleted
+        // Check if the indent was found and marked as deleted
         if (result && result.rowsAffected && result.rowsAffected[0] === 0) {
             console.warn(`Indent not found during deletion: ${indentNo}`);
             return res.status(404).json({ message: 'Indent not found' });
         }
 
         // Return success response
-        res.json({ message: 'Indent deleted successfully' });
+        res.json({ message: 'Indent marked as deleted successfully' });
     } catch (err) {
         console.error('Error deleting indent:', err);
         res.status(500).json({ message: 'Failed to delete indent', error: err.message });
