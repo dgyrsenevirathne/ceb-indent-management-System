@@ -58,4 +58,37 @@ document.getElementById('indentForm').addEventListener('submit', function (event
         });
 });
 
+document.getElementById('updateConversionRateButton').addEventListener('click', function () {
+    const currency = document.getElementById('currency').value.trim(); // Get selected currency
+    const conversionRate = parseFloat(document.getElementById('conversionRate').value) || 0; // Get conversion rate
+
+    if (!currency || conversionRate <= 0) {
+        alert('Please select a currency and enter a valid conversion rate.');
+        return;
+    }
+
+    // Send the conversion rate to the server
+    fetch('/update-conversion-rate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ currency, conversionRate })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            alert('Conversion rate updated successfully!');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('There was a problem updating the conversion rate.');
+        });
+});
+
 

@@ -231,6 +231,33 @@ app.delete('/delete-indent/:indentNo', async (req, res) => {
     }
 });
 
+app.post('/update-conversion-rate', async (req, res) => {
+    try {
+        const { currency, conversionRate } = req.body;
+
+        // SQL query to update the conversion rate
+        const updateQuery = `
+            UPDATE [IndentManagement].[dbo].[CurrencyConversionRates]
+            SET [ConversionRate] = ?
+            WHERE [Currency] = ?
+        `;
+
+        const result = await executeQuery(sqlConfig.connectionString, updateQuery, [conversionRate, currency]);
+        console.log('Update result:', result); // Log the result for debugging
+
+        // Check if rowsAffected is defined and has the expected structure
+        if (result && result.rowsAffected && result.rowsAffected.length > 0 && result.rowsAffected[0] === 0) {
+            console.warn(`Currency not found: ${currency}`);
+            return res.status(404).send({ message: 'Currency not found' });
+        }
+
+        res.status(200).send({ message: 'Conversion rate updated successfully' });
+    } catch (error) {
+        console.error('Error updating conversion rate:', error);
+        res.status(500).send({ error: 'An error occurred while updating the conversion rate' });
+    }
+});
+
 
 // Start the server
 app.listen(3000, () => {
