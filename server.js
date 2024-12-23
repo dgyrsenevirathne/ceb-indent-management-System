@@ -78,7 +78,7 @@ app.post('/add-indent', async (req, res) => {
         const checkQuery = `
             SELECT COUNT(*) AS count 
             FROM [IndentManagement].[dbo].[IndentDetails] 
-            WHERE [IndentNo] = ?
+            WHERE [IndentNo] = ? AND [IsDeleted] = 0
         `;
         const checkResult = await executeQuery(sqlConfig.connectionString, checkQuery, [trimmedData.indentNo]);
 
