@@ -43,7 +43,6 @@ const validateIndentData = (data) => {
     return errors;
 };
 
-// Add a new indent
 app.post('/add-indent', async (req, res) => {
     try {
         const {
@@ -74,23 +73,47 @@ app.post('/add-indent', async (req, res) => {
             return res.status(400).send({ errors: validationErrors });
         }
 
-        // Check if the record already exists
+        // Check if the record already exists (including deleted records)
         const checkQuery = `
             SELECT COUNT(*) AS count 
             FROM [IndentManagement].[dbo].[IndentDetails] 
-            WHERE [IndentNo] = ? AND [IsDeleted] = 0
+            WHERE [IndentNo] = ? AND [ComplexRef] = ?
         `;
-        const checkResult = await executeQuery(sqlConfig.connectionString, checkQuery, [trimmedData.indentNo]);
+        const checkResult = await executeQuery(sqlConfig.connectionString, checkQuery, [trimmedData.indentNo, trimmedData.complexRef]);
 
         if (checkResult[0]?.count > 0) {
-            return res.status(400).send({ error: 'Record with this IndentNo already exists.' });
+            // If the record exists, update it to restore it
+            const updateQuery = `
+                UPDATE [IndentManagement].[dbo].[IndentDetails] 
+                SET [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
+                    [VAT] = ?, [NAT] = ?, [Advance] = ?, [Reimbursement] = ?, 
+                    [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [IsDeleted] = 0
+                WHERE [IndentNo] = ? AND [ComplexRef] = ?
+            `;
+            await executeQuery(sqlConfig.connectionString, updateQuery, [
+                trimmedData.month,
+                trimmedData.currency,
+                trimmedData.baseValue,
+                trimmedData.harringAndTransport,
+                trimmedData.vat,
+                trimmedData.nat,
+                trimmedData.advance,
+                trimmedData.reimbursement,
+                trimmedData.commission,
+                trimmedData.complexRef,
+                trimmedData.item,
+                trimmedData.supplier,
+                trimmedData.indentNo,
+                trimmedData.complexRef
+            ]);
+            return res.status(200).send({ message: 'Indent restored successfully!' });
         }
 
-        // Insert new record
+        // Insert new record if it does not exist
         const insertQuery = `
             INSERT INTO [IndentManagement].[dbo].[IndentDetails] 
             ([Month], [IndentNo], [Currency], [BaseValue], [HarringAndTransport], 
-            [VAT], [NAT], [Advance], [Reimbursement], [Commission], 
+            [VAT], [NAT], [Advance], [Re imbursement], [Commission], 
             [ComplexRef], [Item], [Supplier])
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
@@ -182,16 +205,17 @@ app.put('/update-indent/:indentNo', async (req, res) => {
             advance, reimbursement, commission, complexRef, item, supplier,
         } = req.body;
 
-        const query = `
-            UPDATE [IndentManagement].[dbo].[IndentDetails] SET
-                [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
-                [VAT] = ?, [NAT] = ?, [Advance] = ?, [Reimbursement] = ?, 
-                [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?
-            WHERE [IndentNo] = ?
-        `;
-        await executeQuery(sqlConfig.connectionString, query, [
+        // Update the existing record
+        const updateQuery = `
+         UPDATE [IndentManagement].[dbo].[IndentDetails] SET
+             [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
+             [VAT] = ?, [NAT] = ?, [Advance] = ?, [Reimbursement] = ?, 
+             [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [IsDeleted] = 0
+         WHERE [IndentNo] = ? AND [ComplexRef] = ?
+     `;
+        await executeQuery(sqlConfig.connectionString, updateQuery, [
             month, currency, baseValue, harringAndTransport, vat, nat,
-            advance, reimbursement, commission, complexRef, item, supplier, indentNo,
+            advance, reimbursement, commission, complexRef, item, supplier, indentNo, complexRef
         ]);
 
         res.json({ message: 'Indent updated successfully' });
