@@ -113,7 +113,7 @@ app.post('/add-indent', async (req, res) => {
         const insertQuery = `
             INSERT INTO [IndentManagement].[dbo].[IndentDetails] 
             ([Month], [IndentNo], [Currency], [BaseValue], [HarringAndTransport], 
-            [VAT], [NAT], [Advance], [Re imbursement], [Commission], 
+            [VAT], [NAT], [Advance], [Reimbursement], [Commission], 
             [ComplexRef], [Item], [Supplier])
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
