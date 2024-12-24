@@ -204,7 +204,7 @@ app.put('/update-indent/:indentNo', async (req, res) => {
     try {
         const indentNo = req.params.indentNo;
         const {
-            month, currency, baseValue, harringAndTransport, vat, nat,
+            year, month, currency, baseValue, harringAndTransport, vat, nat,
             advance, reimbursement, commission, complexRef, item, supplier,
         } = req.body;
 
@@ -217,8 +217,8 @@ app.put('/update-indent/:indentNo', async (req, res) => {
          WHERE [IndentNo] = ? AND [ComplexRef] = ?
      `;
         await executeQuery(sqlConfig.connectionString, updateQuery, [
-            trimmedData.year, // Update year
-            month, currency, baseValue, harringAndTransport, vat, nat,
+
+            year, month, currency, baseValue, harringAndTransport, vat, nat,
             advance, reimbursement, commission, complexRef, item, supplier, indentNo, complexRef
         ]);
 
