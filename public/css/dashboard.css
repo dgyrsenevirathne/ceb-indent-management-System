@@ -148,8 +148,6 @@ nav ul {
     /* Remove bullet points */
     padding: 0;
     /* Remove default padding */
-    text-align: center;
-    /* Center the navigation items */
 }
 
 nav ul li {
