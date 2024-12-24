@@ -7,6 +7,14 @@ const sql = require('msnodesqlv8'); // For SQL Server connection
 const app = express();
 app.use(cors()); // Enable CORS
 app.use(bodyParser.json());
+
+
+// Redirect root URL to dashboard.html
+app.get('/', (req, res) => {
+    console.log('Redirecting to dashboard.html'); // Debug log
+    res.redirect('/dashboard.html'); // Redirect to dashboard.html
+});
+
 app.use(express.static('public')); // Serve static files from the "public" directory
 
 // SQL Server connection configuration
