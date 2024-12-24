@@ -46,6 +46,7 @@ function displayIndents(indents, page) {
         const indent = indents[i];
         const row = document.createElement('tr');
         row.innerHTML = `
+            <td>${indent.Year}</td> 
             <td>${indent.Month}</td>
             <td>${indent.IndentNo}</td>
             <td>${indent.Currency}</td>
@@ -103,7 +104,8 @@ function editIndent(indentNo) {
             }
 
             // Populate the form with indent details using the new IDs
-            document.getElementById('editMonth').value = indent.Month;
+            document.getElementById('year').value = indent.Year;
+            document.getElementById('month').value = indent.Month;
             document.getElementById('editCurrency').value = indent.Currency;
             document.getElementById('editBaseValue').value = indent.BaseValue;
             document.getElementById('editHarringAndTransport').value = indent.HarringAndTransport;

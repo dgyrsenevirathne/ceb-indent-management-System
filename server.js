@@ -46,12 +46,13 @@ const validateIndentData = (data) => {
 app.post('/add-indent', async (req, res) => {
     try {
         const {
-            month, indentNo, currency, baseValue, harringAndTransport,
+            year, month, indentNo, currency, baseValue, harringAndTransport,
             vat, nat, advance, reimbursement, commission, complexRef, item, supplier,
         } = req.body;
 
         // Trim spaces from the incoming data
         const trimmedData = {
+            year: year.trim(), // Added year
             month: month.trim(),
             indentNo: indentNo.trim(),
             currency: currency.trim(),
@@ -85,12 +86,13 @@ app.post('/add-indent', async (req, res) => {
             // If the record exists, update it to restore it
             const updateQuery = `
                 UPDATE [IndentManagement].[dbo].[IndentDetails] 
-                SET [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
+                SET [Year] = ?, [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
                     [VAT] = ?, [NAT] = ?, [Advance] = ?, [Reimbursement] = ?, 
                     [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [IsDeleted] = 0
                 WHERE [IndentNo] = ? AND [ComplexRef] = ?
             `;
             await executeQuery(sqlConfig.connectionString, updateQuery, [
+                trimmedData.year, // Update year
                 trimmedData.month,
                 trimmedData.currency,
                 trimmedData.baseValue,
@@ -112,12 +114,13 @@ app.post('/add-indent', async (req, res) => {
         // Insert new record if it does not exist
         const insertQuery = `
             INSERT INTO [IndentManagement].[dbo].[IndentDetails] 
-            ([Month], [IndentNo], [Currency], [BaseValue], [HarringAndTransport], 
+            ([Year], [Month], [IndentNo], [Currency], [BaseValue], [HarringAndTransport], 
             [VAT], [NAT], [Advance], [Reimbursement], [Commission], 
             [ComplexRef], [Item], [Supplier], [CreatedAt])
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE())
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE())
         `;
         await executeQuery(sqlConfig.connectionString, insertQuery, [
+            trimmedData.year, // Insert year
             trimmedData.month,
             trimmedData.indentNo,
             trimmedData.currency,
@@ -208,12 +211,13 @@ app.put('/update-indent/:indentNo', async (req, res) => {
         // Update the existing record
         const updateQuery = `
          UPDATE [IndentManagement].[dbo].[IndentDetails] SET
-             [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
+            [Year] = ?, [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
              [VAT] = ?, [NAT] = ?, [Advance] = ?, [Reimbursement] = ?, 
              [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [IsDeleted] = 0
          WHERE [IndentNo] = ? AND [ComplexRef] = ?
      `;
         await executeQuery(sqlConfig.connectionString, updateQuery, [
+            trimmedData.year, // Update year
             month, currency, baseValue, harringAndTransport, vat, nat,
             advance, reimbursement, commission, complexRef, item, supplier, indentNo, complexRef
         ]);

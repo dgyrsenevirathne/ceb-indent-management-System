@@ -13,8 +13,37 @@
 
     <form id="editIndentForm">
         <div>
-            <label for="editMonth">Month</label>
-            <input type="text" id="editMonth" name="month" placeholder="Month">
+            <!-- Year Selection -->
+            <label for="year">Year:</label>
+            <select id="year" name="year" required>
+                <option value="" disabled selected>Select Year</option>
+                <!-- Generate options for the last 10 years -->
+                <script>
+                    const currentYear = new Date().getFullYear();
+                    for (let i = currentYear; i >= currentYear - 10; i--) {
+                        document.write(`<option value="${i}">${i}</option>`);
+                    }
+                </script>
+            </select>
+        </div>
+        <div>
+            <!-- Month Selection -->
+            <label for="month">Month:</label>
+            <select id="month" name="month" required>
+                <option value="" disabled selected>Select Month</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+            </select>
         </div>
         <div>
             <label for="editCurrency">Currency</label>
@@ -102,7 +131,8 @@
                 })
                 .then(indent => {
                     // Populate the form with indent details
-                    document.getElementById('editMonth').value = indent.Month;
+                    document.getElementById('year').value = indent.Year;
+                    document.getElementById('month').value = indent.Month;
                     document.getElementById('editCurrency').value = indent.Currency;
                     document.getElementById('editBaseValue').value = indent.BaseValue;
                     document.getElementById('editHarringAndTransport').value = indent.HarringAndTransport;

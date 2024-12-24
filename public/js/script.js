@@ -18,6 +18,7 @@ document.getElementById('indentForm').addEventListener('submit', function (event
     event.preventDefault(); // Prevent the default form submission
 
     const formData = {
+        year: document.getElementById('year').value.trim(), // Get selected year
         month: document.getElementById('month').value.trim(), // Trim spaces
         indentNo: document.getElementById('indentNo').value.trim(), // Trim spaces
         currency: document.getElementById('currency').value.trim(), // Trim spaces
