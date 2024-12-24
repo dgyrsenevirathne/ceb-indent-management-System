@@ -114,8 +114,8 @@ app.post('/add-indent', async (req, res) => {
             INSERT INTO [IndentManagement].[dbo].[IndentDetails] 
             ([Month], [IndentNo], [Currency], [BaseValue], [HarringAndTransport], 
             [VAT], [NAT], [Advance], [Reimbursement], [Commission], 
-            [ComplexRef], [Item], [Supplier])
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            [ComplexRef], [Item], [Supplier], [CreatedAt])
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE())
         `;
         await executeQuery(sqlConfig.connectionString, insertQuery, [
             trimmedData.month,
