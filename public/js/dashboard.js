@@ -25,7 +25,12 @@ const filterIndents = () => {
 // Use debounce to limit the filter function calls
 const debouncedFilterIndents = debounce(filterIndents, 300); // 300ms delay
 
-document.getElementById('filterButton').addEventListener('click', debouncedFilterIndents);
+document.getElementById('filterButton').addEventListener('click', function () {
+    // Clear the search input field
+    document.getElementById('searchInput').value = '';
+    // Call the debounced filter function
+    debouncedFilterIndents();
+});
 document.getElementById('searchInput').addEventListener('input', debouncedFilterIndents); // Call filter on input
 
 // Export to Excel functionality
