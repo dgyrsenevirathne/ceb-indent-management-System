@@ -337,3 +337,34 @@ nav ul li a:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+button.details {
+    background-color: #FFD700;
+    /* Yellow color */
+    color: white;
+    /* Text color */
+    font-size: 12px;
+    /* Font size */
+    padding: 5px 10px;
+    /* Padding */
+    margin: 2px;
+    /* Margin */
+    border: none;
+    /* No border */
+    border-radius: 4px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    transition: all 0.3s ease;
+    /* Transition effect */
+}
+
+button.details:hover {
+    background-color: #FFC300;
+    /* Darker yellow on hover */
+}
+
+button.details:active {
+    transform: translateY(1px);
+    /* Slightly move down on click */
+}
