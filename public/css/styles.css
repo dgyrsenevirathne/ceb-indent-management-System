@@ -1,88 +1,81 @@
-/* CSS Styles for the Form */
-
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
 .container {
-    width: 90%;
-    max-width: 600px;
-    /* Set a max width for larger screens */
-    margin: 50px auto;
-    /* Center the container with some top margin */
-    background: #fff;
-    padding: 30px;
-    /* Increased padding for a more spacious feel */
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
     border-radius: 8px;
-    /* Slightly larger border radius */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    /* Deeper shadow for a floating effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     text-align: center;
-    color: #333;
-    /* Darker color for better contrast */
-    margin-bottom: 20px;
-    /* More space below the heading */
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allow wrapping */
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 10px;
+    align-items: center;
+    /* Use gap for spacing */
+}
+
+.col {
+    flex: 1;
+    /* Allow columns to grow and shrink, with a base width of 20% */
+    min-width: 150px;
+    /* Set a minimum width for better alignment */
+}
+
+.col:last-child {
+    margin-right: 0;
 }
 
 label {
     display: block;
-    margin: 15px 0 5px;
-    /* Increased margin for better spacing */
-    font-weight: bold;
-    /* Bold labels for emphasis */
-    color: #555;
-    /* Slightly darker color for labels */
+    margin-bottom: 5px;
 }
 
-input,
+input[type="text"],
+input[type="number"],
 select {
     width: 100%;
-    padding: 12px;
-    /* Increased padding for comfort */
-    margin-bottom: 15px;
-    /* More space between inputs */
+    padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
     box-sizing: border-box;
-    /* Ensures padding is included in width */
-    transition: border-color 0.3s;
-    /* Smooth transition for focus effect */
-}
-
-input:focus,
-select:focus {
-    border-color: #007BFF;
-    /* Change border color on focus */
-    outline: none;
-    /* Remove default outline */
 }
 
 button {
-    width: 100%;
-    padding: 12px;
-    /* Increased padding for the button */
-    background: #5cb85c;
-    /* Green background */
-    color: white;
+    padding: 8px 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
     cursor: pointer;
-    font-size: 16px;
-    /* Larger font size for better readability */
-    transition: background 0.3s;
-    /* Smooth transition for hover effect */
+    width: auto;
+    /* Allow button to size based on content */
+    align-self: stretch;
 }
 
 button:hover {
-    background: #4cae4c;
-    /* Darker green on hover */
+    background-color: #0056b3;
 }
+
+#updateConversionRateButton {
+    padding: 8px 18px;
+    font-size: 0.9em;
+    margin-top: 23px;
+}
+
 
 @media (max-width: 600px) {
     .container {
