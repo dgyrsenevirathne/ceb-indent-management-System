@@ -134,56 +134,67 @@ button.delete:active {
 
 
 
-/* Navigation Styles */
+/* Enhanced navigation */
 nav {
     background-color: #007BFF;
-    /* Blue background */
     padding: 10px;
-    /* Padding around the nav */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
 }
 
 nav ul {
     list-style-type: none;
-    /* Remove bullet points */
     padding: 0;
-    /* Remove default padding */
+    display: flex;
+    justify-content: left;
+    gap: 20px;
 }
 
 nav ul li {
     display: inline;
-    /* Display items in a line */
     margin-right: 20px;
-    /* Space between items */
+    position: relative;
 }
 
 nav ul li a {
     color: white;
-    /* White text color */
     text-decoration: none;
-    /* Remove underline */
     font-weight: bold;
-    /* Bold text */
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
-    /* Underline on hover */
+    text-decoration: none;
+    transform: translateY(-2px);
 }
 
-/* Responsive Styles */
-@media (max-width: 600px) {
-    .container {
-        width: 95%;
-        /* Full width on smaller screens */
-    }
-
-    nav ul li {
-        display: block;
-        /* Stack navigation items on smaller screens */
-        margin-bottom: 10px;
-        /* Space between stacked items */
-    }
-}
 
 #exportCSVButton,
 #exportExcelButton {

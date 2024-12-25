@@ -1,47 +1,102 @@
+/* Keep existing base styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f0f2f5;
 }
 
+/* Enhanced container with subtle animation */
 .container {
     width: 80%;
-    margin: auto;
+    margin: 30px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in;
+    position: relative;
 }
 
-h1 {
-    text-align: center;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: #007bff;
+    animation: widthGrow 0.5s ease-out;
+}
+
+@keyframes widthGrow {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 50px;
+    }
+}
+
+/* Keep existing row structure with enhanced animation */
 .row {
     display: flex;
     flex-wrap: wrap;
-    /* Allow wrapping */
     justify-content: space-between;
     margin-bottom: 15px;
     gap: 10px;
     align-items: center;
-    /* Use gap for spacing */
+    animation: slideIn 0.3s ease-out;
 }
 
+@keyframes slideIn {
+    from {
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Enhanced column styles */
 .col {
     flex: 1;
-    /* Allow columns to grow and shrink, with a base width of 20% */
     min-width: 150px;
-    /* Set a minimum width for better alignment */
+    transition: all 0.3s ease;
 }
 
-.col:last-child {
-    margin-right: 0;
+.col:hover {
+    transform: translateY(-2px);
 }
 
+/* Enhanced form elements */
 label {
     display: block;
     margin-bottom: 5px;
+    color: #34495e;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+label:hover {
+    color: #007bff;
 }
 
 input[type="text"],
@@ -52,8 +107,20 @@ select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    transition: all 0.3s ease;
+    background-color: white;
 }
 
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* Enhanced button styles */
 button {
     padding: 8px 10px;
     border: none;
@@ -62,12 +129,35 @@ button {
     color: white;
     cursor: pointer;
     width: auto;
-    /* Allow button to size based on content */
     align-self: stretch;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
 }
 
 button:hover {
     background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 #updateConversionRateButton {
@@ -76,45 +166,132 @@ button:hover {
     margin-top: 23px;
 }
 
-
-@media (max-width: 600px) {
-    .container {
-        width: 95%;
-        /* Full width on smaller screens */
-    }
-}
-
+/* Enhanced navigation */
 nav {
     background-color: #007BFF;
-    /* Blue background */
     padding: 10px;
-    /* Padding around the nav */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
 }
 
 nav ul {
     list-style-type: none;
-    /* Remove bullet points */
     padding: 0;
-    /* Remove default padding */
+    display: flex;
+    justify-content: left;
+    gap: 20px;
 }
 
 nav ul li {
     display: inline;
-    /* Display items in a line */
     margin-right: 20px;
-    /* Space between items */
+    position: relative;
 }
 
 nav ul li a {
     color: white;
-    /* White text color */
     text-decoration: none;
-    /* Remove underline */
     font-weight: bold;
-    /* Bold text */
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
-    /* Underline on hover */
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/* Loading state for buttons */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin: -8px 0 0 -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
 }
