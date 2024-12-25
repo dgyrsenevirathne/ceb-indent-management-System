@@ -24,6 +24,8 @@
         <button id="filterButton">Filter</button>
         <div id="pagination"></div></br>
         <button id="exportExcelButton">Export to Excel</button>
+        <!-- ... existing code ... -->
+
         <table id="indentTable">
             <thead>
                 <tr>
@@ -39,16 +41,26 @@
                     <th>Reimbursement</th>
                     <th>Commission</th>
                     <th>Total</th>
-                    <th>Complex Reference</th>
-                    <th>Item</th>
-                    <th>Supplier</th>
-                    <th>Actions</th> <!-- New Actions column for Edit/Delete -->
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="indentTableBody">
                 <!-- Data will be populated here -->
             </tbody>
         </table>
+
+        <!-- Add a modal for displaying details -->
+        <div id="detailsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Indent Details</h2>
+                <p>Complex Reference: <span id="complexRef"></span></p>
+                <p>Item: <span id="item"></span></p>
+                <p>Supplier: <span id="supplier"></span></p>
+            </div>
+        </div>
+
+        <!-- ... existing code ... -->
     </div>
 
     <script src="js/dashboard.js"></script>

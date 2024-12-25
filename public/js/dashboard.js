@@ -58,10 +58,8 @@ function displayIndents(indents, page) {
             <td>${indent.Reimbursement}</td>
             <td>${indent.Commission}</td>
             <td>${indent.Total.toFixed(2)}</td>
-            <td>${indent.ComplexRef}</td>
-            <td>${indent.Item}</td>
-            <td>${indent.Supplier}</td>
             <td>
+            <button class="details" onclick="showDetails('${indent.ComplexRef}', '${indent.Item}', '${indent.Supplier}')">Details</button>
                 <button class="edit" onclick="window.location.href='edit.html?indentNo=${encodeURIComponent(indent.IndentNo)}'">Edit</button>
 <button class="delete" onclick="deleteIndent('${indent.IndentNo}')">Delete</button>
             </td>
@@ -69,6 +67,28 @@ function displayIndents(indents, page) {
         tableBody.appendChild(row);
     }
 }
+
+// Function to show details in a modal
+function showDetails(complexRef, item, supplier) {
+    const modal = document.getElementById('detailsModal');
+    const complexRefSpan = document.getElementById('complexRef');
+    const itemSpan = document.getElementById('item');
+    const supplierSpan = document.getElementById('supplier');
+
+    complexRefSpan.textContent = complexRef;
+    itemSpan.textContent = item;
+    supplierSpan.textContent = supplier;
+
+    modal.style.display = 'block';
+
+    // Add event listener to close the modal
+    const closeSpan = document.querySelector('.close');
+    closeSpan.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+}
+
 
 // Function to setup pagination
 function setupPagination(totalRecords) {
