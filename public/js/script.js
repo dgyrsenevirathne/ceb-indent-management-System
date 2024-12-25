@@ -85,6 +85,10 @@ document.getElementById('updateConversionRateButton').addEventListener('click', 
         .then(data => {
             console.log('Success:', data);
             alert('Conversion rate updated successfully!');
+
+            document.getElementById('currentConversionRate').textContent = conversionRate.toFixed(2);
+            document.getElementById('conversionRate').value = conversionRate; // Optionally update the input field as well
+
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -92,4 +96,36 @@ document.getElementById('updateConversionRateButton').addEventListener('click', 
         });
 });
 
+// Function to fetch conversion rates and display the current conversion rate
+function fetchConversionRates() {
+    fetch('/get-conversion-rates') // Adjust the endpoint as necessary
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const currencySelect = document.getElementById('currency');
+            const currentConversionRateDisplay = document.getElementById('currentConversionRate');
+            const conversionRateInput = document.getElementById('conversionRate');
 
+            // Populate the current conversion rate based on the selected currency
+            currencySelect.addEventListener('change', function () {
+                const selectedCurrency = this.value;
+                const selectedRate = data.find(rate => rate.Currency === selectedCurrency);
+                currentConversionRateDisplay.textContent = selectedRate ? selectedRate.ConversionRate.toFixed(2) : '0.00';
+                conversionRateInput.value = selectedRate ? selectedRate.ConversionRate : '';
+            });
+
+            // Trigger change event on page load to set the initial value
+            currencySelect.dispatchEvent(new Event('change'));
+        })
+        .catch(error => {
+            console.error('Error fetching conversion rates:', error);
+            alert('There was an error fetching the conversion rates: ' + error.message);
+        });
+}
+
+// Call the function when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', fetchConversionRates);

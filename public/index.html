@@ -71,8 +71,12 @@
             <!-- Conversion Rate -->
             <div class="row">
                 <div class="col">
+                    <label for="currentConversionRate">Current Conversion Rate:</label>
+                    <span id="currentConversionRate">0.00</span> <!-- Display current conversion rate here -->
+                </div>
+                <div class="col">
                     <label for="conversionRate">Conversion Rate:</label>
-                    <input type="number" id="conversionRate" name="conversionRate" step="0.01" required>
+                    <input type="number" id="conversionRate" name="conversionRate" step="0.01">
                 </div>
                 <div class="col">
                     <button type="button" id="updateConversionRateButton">Update</button>

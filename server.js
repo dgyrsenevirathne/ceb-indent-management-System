@@ -308,6 +308,18 @@ app.post('/update-conversion-rate', async (req, res) => {
     }
 });
 
+// Fetch conversion rates
+app.get('/get-conversion-rates', async (req, res) => {
+    try {
+        const query = 'SELECT Currency, ConversionRate FROM [IndentManagement].[dbo].[CurrencyConversionRates]';
+        const results = await executeQuery(sqlConfig.connectionString, query);
+        res.json(results);
+    } catch (error) {
+        console.error('Error fetching conversion rates:', error);
+        res.status(500).send({ error: 'Failed to fetch conversion rates' });
+    }
+});
+
 
 // Start the server
 app.listen(3000, () => {
