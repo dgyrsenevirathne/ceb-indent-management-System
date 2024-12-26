@@ -216,10 +216,14 @@ app.put('/update-indent/:indentNo', async (req, res) => {
             advance, reimbursement, commission, complexRef, item, supplier,
         } = req.body;
 
+        // Trim the complex reference
+        const trimmedIndentNo = indentNo.trim();
+        const trimmedComplexRef = complexRef.trim();
+
         // Log the values being used for the update
         console.log('Updating indent with values:', {
             year, month, currency, baseValue, harringAndTransport, vat, nat,
-            advance, reimbursement, commission, complexRef, item, supplier, indentNo
+            advance, reimbursement, commission, trimmedComplexRef, item, supplier, trimmedIndentNo, trimmedComplexRef
         });
 
         // Update the existing record
@@ -228,7 +232,7 @@ app.put('/update-indent/:indentNo', async (req, res) => {
             [Year] = ?, [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
              [VAT] = ?, [NAT] = ?, [Advance] = ?, [Reimbursement] = ?, 
              [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [IsDeleted] = 0
-         WHERE [IndentNo] = ? AND [ComplexRef] = ?
+         WHERE [IndentNo] = ? AND [ComplexRef] = ? AND [IsDeleted] = 0
      `;
         // Wrap the execution in a try-catch block
         try {
