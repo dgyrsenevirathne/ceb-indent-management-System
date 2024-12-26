@@ -51,7 +51,12 @@
         </div>
         <div>
             <label for="editCurrency">Currency</label>
-            <input type="text" id="editCurrency" name="currency" placeholder="Currency">
+            <select id="editCurrency" name="currency" required>
+                <option value="" disabled selected>Select Currency</option>
+                <option value="USD">USD</option>
+                <option value="EURO">EURO</option>
+                <option value="POUND">POUND</option>
+            </select>
         </div>
         <div>
             <label for="editBaseValue">Base Value</label>
