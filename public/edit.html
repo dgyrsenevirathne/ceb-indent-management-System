@@ -13,6 +13,10 @@
 
     <form id="editIndentForm">
         <div>
+            <label for="editIndent">Indent No:</label>
+            <input type="text" id="editIndent" name="indentNo" placeholder="Indent No" required>
+        </div>
+        <div>
             <!-- Year Selection -->
             <label for="year">Year:</label>
             <select id="year" name="year" required>
@@ -131,6 +135,7 @@
                 })
                 .then(indent => {
                     // Populate the form with indent details
+                    document.getElementById('editIndent').value = indent.IndentNo; // Ensure this line is present
                     document.getElementById('year').value = indent.Year;
                     document.getElementById('month').value = indent.Month;
                     document.getElementById('editCurrency').value = indent.Currency;

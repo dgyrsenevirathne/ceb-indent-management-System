@@ -216,6 +216,12 @@ app.put('/update-indent/:indentNo', async (req, res) => {
             advance, reimbursement, commission, complexRef, item, supplier,
         } = req.body;
 
+        // Log the values being used for the update
+        console.log('Updating indent with values:', {
+            year, month, currency, baseValue, harringAndTransport, vat, nat,
+            advance, reimbursement, commission, complexRef, item, supplier, indentNo
+        });
+
         // Update the existing record
         const updateQuery = `
          UPDATE [IndentManagement].[dbo].[IndentDetails] SET
@@ -224,11 +230,17 @@ app.put('/update-indent/:indentNo', async (req, res) => {
              [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [IsDeleted] = 0
          WHERE [IndentNo] = ? AND [ComplexRef] = ?
      `;
-        await executeQuery(sqlConfig.connectionString, updateQuery, [
-
-            year, month, currency, baseValue, harringAndTransport, vat, nat,
-            advance, reimbursement, commission, complexRef, item, supplier, indentNo, complexRef
-        ]);
+        // Wrap the execution in a try-catch block
+        try {
+            const result = await executeQuery(sqlConfig.connectionString, updateQuery, [
+                year, month, currency, baseValue, harringAndTransport, vat, nat,
+                advance, reimbursement, commission, complexRef, item, supplier, indentNo, complexRef
+            ]);
+            console.log('Update result:', result); // Log the result of the update
+        } catch (error) {
+            console.error('Error executing update query:', error);
+            return res.status(500).json({ message: 'Failed to update indent', error: error.message });
+        }
 
         res.json({ message: 'Indent updated successfully' });
     } catch (err) {

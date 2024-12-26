@@ -129,6 +129,7 @@ function editIndent(indentNo) {
             }
 
             // Populate the form with indent details using the new IDs
+            document.getElementById('editIndent').value = indent.IndentNo;
             document.getElementById('year').value = indent.Year;
             document.getElementById('month').value = indent.Month;
             document.getElementById('editCurrency').value = indent.Currency;
