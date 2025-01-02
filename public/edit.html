@@ -10,116 +10,161 @@
 </head>
 
 <body>
+    <div class="form-container">
+        <form id="editIndentForm">
+            <!-- First Row -->
+            <div class="form-row row-4-cols">
+                <div class="field-group">
+                    <label for="editIndent">Indent No:</label>
+                    <input type="text" id="editIndent" name="indentNo" placeholder="Indent No" required>
+                </div>
+                <div class="field-group">
+                    <!-- Year Selection -->
+                    <label for="year">Year:</label>
+                    <select id="year" name="year" required>
+                        <option value="" disabled selected>Select Year</option>
+                        <!-- Generate options for the last 10 years -->
+                        <script>
+                            const currentYear = new Date().getFullYear();
+                            for (let i = currentYear; i >= currentYear - 10; i--) {
+                                document.write(`<option value="${i}">${i}</option>`);
+                            }
+                        </script>
+                    </select>
+                </div>
 
-    <form id="editIndentForm">
-        <div>
-            <label for="editIndent">Indent No:</label>
-            <input type="text" id="editIndent" name="indentNo" placeholder="Indent No" required>
-        </div>
-        <div>
-            <!-- Year Selection -->
-            <label for="year">Year:</label>
-            <select id="year" name="year" required>
-                <option value="" disabled selected>Select Year</option>
-                <!-- Generate options for the last 10 years -->
-                <script>
-                    const currentYear = new Date().getFullYear();
-                    for (let i = currentYear; i >= currentYear - 10; i--) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
-        </div>
-        <div>
-            <!-- Month Selection -->
-            <label for="month">Month:</label>
-            <select id="month" name="month" required>
-                <option value="" disabled selected>Select Month</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-            </select>
-        </div>
-        <div>
-            <label for="editCurrency">Currency</label>
-            <select id="editCurrency" name="currency" required>
-                <option value="" disabled selected>Select Currency</option>
-                <option value="USD">USD</option>
-                <option value="EURO">EURO</option>
-                <option value="POUND">POUND</option>
-            </select>
-        </div>
-        <div>
-            <label for="editBaseValue">Base Value</label>
-            <input type="number" id="editBaseValue" name="baseValue" placeholder="Base Value" step="0.01">
-            <input type="number" id="editBaseIncrement" placeholder="Increment Value" step="0.01">
-            <button type="button" onclick="incrementValue('editBaseValue', 'editBaseIncrement')">Apply
-                Increment</button>
-        </div>
-        <div>
-            <label for="editHarringAndTransport">Harring and Transport</label>
-            <input type="number" id="editHarringAndTransport" name="harringAndTransport"
-                placeholder="Harring and Transport" step="0.01">
-            <input type="number" id="editHarringIncrement" placeholder="Increment Value" step="0.01">
-            <button type="button" onclick="incrementValue('editHarringAndTransport', 'editHarringIncrement')">Apply
-                Increment</button>
-        </div>
-        <div>
-            <label for="editVat">VAT</label>
-            <input type="number" id="editVat" name="vat" placeholder="VAT" step="0.01">
-            <input type="number" id="editVatIncrement" placeholder="Increment Value" step="0.01">
-            <button type="button" onclick="incrementValue('editVat', 'editVatIncrement')">Apply Increment</button>
-        </div>
-        <div>
-            <label for="editNat">NAT</label>
-            <input type="number" id="editNat" name="nat" placeholder="NAT" step="0.01">
-            <input type="number" id="editNatIncrement" placeholder="Increment Value" step="0.01">
-            <button type="button" onclick="incrementValue('editNat', 'editNatIncrement')">Apply Increment</button>
-        </div>
-        <div>
-            <label for="editAdvance">Advance</label>
-            <input type="number" id="editAdvance" name="advance" placeholder="Advance" step="0.01">
-            <input type="number" id="editAdvanceIncrement" placeholder="Increment Value" step="0.01">
-            <button type="button" onclick="incrementValue('editAdvance', 'editAdvanceIncrement')">Apply
-                Increment</button>
-        </div>
-        <div>
-            <label for="editReimbursement">Reimbursement</label>
-            <input type="number" id="editReimbursement" name="reimbursement" placeholder="Reimbursement" step="0.01">
-            <input type="number" id="editReimbursementIncrement" placeholder="Increment Value" step="0.01">
-            <button type="button" onclick="incrementValue('editReimbursement', 'editReimbursementIncrement')">Apply
-                Increment</button>
-        </div>
-        <div>
-            <label for="editCommission">Commission</label>
-            <input type="number" id="editCommission" name="commission" placeholder="Commission" step="0.01">
-            <input type="number" id="editCommissionIncrement" placeholder="Increment Value" step="0.01">
-            <button type="button" onclick="incrementValue('editCommission', 'editCommissionIncrement')">Apply
-                Increment</button>
-        </div>
-        <div>
-            <label for=" editComplexRef">Complex Reference</label>
-            <input type="text" id="editComplexRef" name="complexRef" placeholder="Complex Reference">
-        </div>
-        <div>
-            <label for="editItem">Item</label>
-            <input type="text" id="editItem" name="item" placeholder="Item">
-        </div>
-        <div>
-            <label for="editSupplier">Supplier</label>
-            <input type="text" id="editSupplier" name="supplier" placeholder="Supplier">
-        </div>
-        <button type="submit">Update Indent</button>
-    </form>
+                <div class="field-group">
+                    <!-- Month Selection -->
+                    <label for="month">Month:</label>
+                    <select id="month" name="month" required>
+                        <option value="" disabled selected>Select Month</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label for="editCurrency">Currency</label>
+                    <select id="editCurrency" name="currency" required>
+                        <option value="" disabled selected>Select Currency</option>
+                        <option value="USD">USD</option>
+                        <option value="EURO">EURO</option>
+                        <option value="POUND">POUND</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Second Row -->
+            <div class="form-row row-4-cols">
+                <div class="field-group">
+                    <label for="editBaseValue">Base Value</label>
+                    <input type="number" id="editBaseValue" name="baseValue" placeholder="Base Value" step="0.01">
+                    <div class="increment-group">
+                        <input type="number" id="editBaseIncrement" placeholder="Increment Value" step="0.01">
+                        <button type="button" onclick="incrementValue('editBaseValue', 'editBaseIncrement')">Apply
+                            Increment</button>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label for="editHarringAndTransport">Harring and Transport</label>
+                    <input type="number" id="editHarringAndTransport" name="harringAndTransport"
+                        placeholder="Harring and Transport" step="0.01">
+                    <div class="increment-group">
+                        <input type="number" id="editHarringIncrement" placeholder="Increment Value" step="0.01">
+                        <button type="button"
+                            onclick="incrementValue('editHarringAndTransport', 'editHarringIncrement')">Apply
+                            Increment</button>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label for="editVat">VAT</label>
+                    <input type="number" id="editVat" name="vat" placeholder="VAT" step="0.01">
+                    <div class="increment-group">
+                        <input type="number" id="editVatIncrement" placeholder="Increment Value" step="0.01">
+                        <button type="button" onclick="incrementValue('editVat', 'editVatIncrement')">Apply
+                            Increment</button>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label for="editNat">NAT</label>
+                    <input type="number" id="editNat" name="nat" placeholder="NAT" step="0.01">
+                    <div class="increment-group">
+                        <input type="number" id="editNatIncrement" placeholder="Increment Value" step="0.01">
+                        <button type="button" onclick="incrementValue('editNat', 'editNatIncrement')">Apply
+                            Increment</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Third Row -->
+            <div class="form-row row-4-cols">
+                <div class="field-group">
+                    <label for="editAdvance">Advance</label>
+                    <input type="number" id="editAdvance" name="advance" placeholder="Advance" step="0.01">
+                    <div class="increment-group">
+                        <input type="number" id="editAdvanceIncrement" placeholder="Increment Value" step="0.01">
+                        <button type="button" onclick="incrementValue('editAdvance', 'editAdvanceIncrement')">Apply
+                            Increment</button>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label for="editReimbursement">Reimbursement</label>
+                    <input type="number" id="editReimbursement" name="reimbursement" placeholder="Reimbursement"
+                        step="0.01">
+                    <div class="increment-group">
+                        <input type="number" id="editReimbursementIncrement" placeholder="Increment Value" step="0.01">
+                        <button type="button"
+                            onclick="incrementValue('editReimbursement', 'editReimbursementIncrement')">Apply
+                            Increment</button>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label for="editCommission">Commission</label>
+                    <input type="number" id="editCommission" name="commission" placeholder="Commission" step="0.01">
+                    <div class="increment-group">
+                        <input type="number" id="editCommissionIncrement" placeholder="Increment Value" step="0.01">
+                        <button type="button"
+                            onclick="incrementValue('editCommission', 'editCommissionIncrement')">Apply
+                            Increment</button>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label for=" editComplexRef">Complex Reference</label>
+                    <input type="text" id="editComplexRef" name="complexRef" placeholder="Complex Reference">
+                </div>
+            </div>
+
+            <!-- Fourth Row -->
+            <div class="form-row row-1-col">
+                <div class="field-group">
+                    <label for="editItem">Item</label>
+                    <input type="text" id="editItem" name="item" placeholder="Item">
+                </div>
+            </div>
+
+            <!-- Fifth Row -->
+            <div class="form-row row-1-col">
+                <div class="field-group">
+                    <label for="editSupplier">Supplier</label>
+                    <input type="text" id="editSupplier" name="supplier" placeholder="Supplier">
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-button">
+                <button type="submit">Update Indent</button>
+            </div>
+        </form>
+    </div>
 
     <script>
         function incrementValue(inputId, incrementId) {
