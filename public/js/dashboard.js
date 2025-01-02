@@ -56,6 +56,7 @@ function displayIndents(indents, page) {
             <td>${indent.IndentNo}</td>
             <td>${indent.Currency}</td>
             <td>${indent.BaseValue}</td>
+            <td>${indent.Value}</td>
             <td>${indent.HarringAndTransport}</td>
             <td>${indent.VAT}</td>
             <td>${indent.NAT}</td>

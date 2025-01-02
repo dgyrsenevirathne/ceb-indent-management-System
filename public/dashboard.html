@@ -25,29 +25,31 @@
             <button id="exportExcelButton">Export to Excel</button>
         </div>
         <div id="pagination"></div></br>
-
-        <table id="indentTable">
-            <thead>
-                <tr>
-                    <th>Year</th>
-                    <th>Month</th>
-                    <th>Indent No</th>
-                    <th>Currency</th>
-                    <th>Base Value</th>
-                    <th>Harring and Transport</th>
-                    <th>VAT</th>
-                    <th>NAT</th>
-                    <th>Advance</th>
-                    <th>Reimbursement</th>
-                    <th>Commission</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="indentTableBody">
-                <!-- Data will be populated here -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table id="indentTable">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Indent No</th>
+                        <th>Currency</th>
+                        <th>Base Value</th>
+                        <th>Value</th>
+                        <th>Harring and Transport</th>
+                        <th>VAT</th>
+                        <th>NAT</th>
+                        <th>Advance</th>
+                        <th>Reimbursement</th>
+                        <th>Commission</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="indentTableBody">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
 
         <!-- Add a modal for displaying details -->
         <div id="detailsModal" class="modal">
