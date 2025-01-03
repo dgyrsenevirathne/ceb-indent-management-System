@@ -1,0 +1,143 @@
+/* dashboard.css */
+
+/* General Styles for the Dashboard */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+}
+
+
+h1 {
+    text-align: center;
+    color: #333;
+    /* Darker color for better contrast */
+    margin-bottom: 20px;
+    /* More space below the heading */
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: auto;
+    /* Adjust column widths based on content */
+}
+
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    /* Maintain consistent padding */
+    text-align: left;
+    font-size: 14px;
+    overflow: hidden;
+    /* Hide overflow content */
+    text-overflow: ellipsis;
+    /* Add ellipsis for long content */
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Responsive Table */
+@media (max-width: 600px) {
+    table {
+        font-size: 12px;
+        /* Adjust font size for small screens */
+    }
+
+    th,
+    td {
+        padding: 8px;
+        /* Slightly more padding to avoid content overflow */
+    }
+
+    button {
+        font-size: 10px;
+        /* Smaller buttons for compact view */
+        padding: 3px 8px;
+    }
+}
+
+
+
+/* Enhanced navigation */
+nav {
+    background-color: #007BFF;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: left;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+    position: relative;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+nav ul li a:hover {
+    text-decoration: none;
+    transform: translateY(-2px);
+}
