@@ -50,9 +50,11 @@ function displayIndents(indents, page) {
     for (let i = startIndex; i < endIndex; i++) {
         const indent = indents[i];
         const row = document.createElement('tr');
+        const date = new Date(indent.Date); // Create a Date object from the date string
+        const formattedDate = date.toISOString().split('T')[0]; // Extract the date part (YYYY-MM-DD)
+
         row.innerHTML = `
-            <td>${indent.Year}</td> 
-            <td>${indent.Month}</td>
+         <td>${formattedDate}</td>
             <td>${indent.IndentNo}</td>
             <td>${indent.Currency}</td>
             <td>${indent.BaseValue}</td>
@@ -130,8 +132,7 @@ function editIndent(indentNo) {
             }
 
             // Populate the form with indent details using the new IDs
-            document.getElementById('editIndent').value = indent.IndentNo;
-            document.getElementById('year').value = indent.Year;
+            document.getElementById('date').value = indent.Date; // Add the date field
             document.getElementById('month').value = indent.Month;
             document.getElementById('editCurrency').value = indent.Currency;
             document.getElementById('editBaseValue').value = indent.BaseValue;
@@ -191,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Function to update an indent
 function updateIndent(indentNo) {
     const data = {
-        month: document.getElementById('month').value,
+        date: document.getElementById('date').value, // Add the date field
         currency: document.getElementById('currency').value,
         baseValue: parseFloat(document.getElementById('baseValue').value) || 0,
         harringAndTransport: parseFloat(document.getElementById('harringAndTransport').value) || 0,

@@ -38,9 +38,9 @@ const executeQuery = (connectionString, query, params) => {
 // Helper function to validate indent data
 const validateIndentData = (data) => {
     const errors = [];
-    if (!data.month) errors.push('Month is required.');
     if (!data.indentNo) errors.push('Indent No is required.');
     if (!data.currency) errors.push('Currency is required.');
+    if (!data.date) errors.push('Date is required.');
     if (data.baseValue < 0) errors.push('Base Value must be a positive number.');
     if (data.harringAndTransport < 0) errors.push('Harring and Transport must be a positive number.');
     if (data.vat < 0) errors.push('VAT must be a positive number.');
@@ -54,14 +54,13 @@ const validateIndentData = (data) => {
 app.post('/add-indent', async (req, res) => {
     try {
         const {
-            year, month, indentNo, currency, baseValue, harringAndTransport,
+            indentNo, currency, baseValue, harringAndTransport,
             vat, nat, advance, reimbursement, commission, complexRef, item, supplier,
+            date // Add the date field
         } = req.body;
 
         // Trim spaces from the incoming data
         const trimmedData = {
-            year: year.trim(), // Added year
-            month: month.trim(),
             indentNo: indentNo.trim(),
             currency: currency.trim(),
             baseValue: parseFloat(baseValue) || 0,
@@ -73,7 +72,8 @@ app.post('/add-indent', async (req, res) => {
             commission: parseFloat(commission) || 0,
             complexRef: complexRef ? complexRef.trim() : null,
             item: item ? item.trim() : null,
-            supplier: supplier ? supplier.trim() : null
+            supplier: supplier ? supplier.trim() : null,
+            date: date // Add the date field
         };
 
         // Validate input data
@@ -94,14 +94,12 @@ app.post('/add-indent', async (req, res) => {
             // If the record exists, update it to restore it
             const updateQuery = `
                 UPDATE [IndentManagement].[dbo].[IndentDetails] 
-                SET [Year] = ?, [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
+                SET [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
                     [VAT] = ?, [NAT] = ?, [Advance] = ?, [Reimbursement] = ?, 
-                    [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [IsDeleted] = 0
+                    [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [Date] = ?, [IsDeleted] = 0
                 WHERE [IndentNo] = ? AND [ComplexRef] = ?
             `;
             await executeQuery(sqlConfig.connectionString, updateQuery, [
-                trimmedData.year, // Update year
-                trimmedData.month,
                 trimmedData.currency,
                 trimmedData.baseValue,
                 trimmedData.harringAndTransport,
@@ -113,6 +111,7 @@ app.post('/add-indent', async (req, res) => {
                 trimmedData.complexRef,
                 trimmedData.item,
                 trimmedData.supplier,
+                trimmedData.date,
                 trimmedData.indentNo,
                 trimmedData.complexRef
             ]);
@@ -122,14 +121,12 @@ app.post('/add-indent', async (req, res) => {
         // Insert new record if it does not exist
         const insertQuery = `
             INSERT INTO [IndentManagement].[dbo].[IndentDetails] 
-            ([Year], [Month], [IndentNo], [Currency], [BaseValue], [HarringAndTransport], 
+            ([IndentNo], [Currency], [BaseValue], [HarringAndTransport], 
             [VAT], [NAT], [Advance], [Reimbursement], [Commission], 
-            [ComplexRef], [Item], [Supplier], [CreatedAt])
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE())
+            [ComplexRef], [Item], [Supplier], [Date], [CreatedAt])
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE())
         `;
         await executeQuery(sqlConfig.connectionString, insertQuery, [
-            trimmedData.year, // Insert year
-            trimmedData.month,
             trimmedData.indentNo,
             trimmedData.currency,
             trimmedData.baseValue,
@@ -142,6 +139,7 @@ app.post('/add-indent', async (req, res) => {
             trimmedData.complexRef,
             trimmedData.item,
             trimmedData.supplier,
+            trimmedData.date,
         ]);
 
         res.status(201).send({ message: 'Indent added successfully!' });
@@ -160,7 +158,7 @@ app.get('/get-indents', async (req, res) => {
 
         const query = `
     SELECT * FROM [IndentManagement].[dbo].[IndentDetails]
-    WHERE [IsDeleted] = 0 AND CONCAT(IndentNo, Month, Item, Supplier) LIKE ?
+    WHERE [IsDeleted] = 0 AND CONCAT(IndentNo, Item, Supplier, Date) LIKE ?
     ORDER BY [IndentNo] OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
 `;
         const results = await executeQuery(sqlConfig.connectionString, query, [searchQuery, offset, limit]);
@@ -212,8 +210,9 @@ app.put('/update-indent/:indentNo', async (req, res) => {
     try {
         const indentNo = req.params.indentNo;
         const {
-            year, month, currency, baseValue, harringAndTransport, vat, nat,
+            currency, baseValue, harringAndTransport, vat, nat,
             advance, reimbursement, commission, complexRef, item, supplier,
+            date // Add the date field
         } = req.body;
 
         // Trim the complex reference
@@ -222,23 +221,23 @@ app.put('/update-indent/:indentNo', async (req, res) => {
 
         // Log the values being used for the update
         console.log('Updating indent with values:', {
-            year, month, currency, baseValue, harringAndTransport, vat, nat,
-            advance, reimbursement, commission, trimmedComplexRef, item, supplier, trimmedIndentNo, trimmedComplexRef
+            currency, baseValue, harringAndTransport, vat, nat,
+            advance, reimbursement, commission, trimmedComplexRef, item, supplier, trimmedIndentNo, trimmedComplexRef, date
         });
 
         // Update the existing record
         const updateQuery = `
          UPDATE [IndentManagement].[dbo].[IndentDetails] SET
-            [Year] = ?, [Month] = ?, [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
+            [Currency] = ?, [BaseValue] = ?, [HarringAndTransport] = ?, 
              [VAT] = ?, [NAT] = ?, [Advance] = ?, [Reimbursement] = ?, 
-             [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [IsDeleted] = 0
+             [Commission] = ?, [ComplexRef] = ?, [Item] = ?, [Supplier] = ?, [Date] = ?, [IsDeleted] = 0
          WHERE [IndentNo] = ? AND [ComplexRef] = ? AND [IsDeleted] = 0
      `;
         // Wrap the execution in a try-catch block
         try {
             const result = await executeQuery(sqlConfig.connectionString, updateQuery, [
-                year, month, currency, baseValue, harringAndTransport, vat, nat,
-                advance, reimbursement, commission, complexRef, item, supplier, indentNo, complexRef
+                currency, baseValue, harringAndTransport, vat, nat,
+                advance, reimbursement, commission, complexRef, item, supplier, date, indentNo, complexRef
             ]);
             console.log('Update result:', result); // Log the result of the update
         } catch (error) {
