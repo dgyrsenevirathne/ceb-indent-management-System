@@ -127,11 +127,12 @@
             </div>
 
             <!-- Fifth Row -->
-            <div class="form-row row-1-col">
-                <div class="field-group">
-                    <label for="editSupplier">Supplier</label>
-                    <input type="text" id="editSupplier" name="supplier" placeholder="Supplier">
-                </div>
+            <!-- Supplier -->
+            <div class="field-group">
+                <label for="editSupplier">Supplier:</label>
+                <select id="editSupplier" name="supplier">
+                    <option value="">Select Supplier</option>
+                </select>
             </div>
 
             <!-- Submit Button -->
@@ -150,6 +151,20 @@
             inputField.value = (currentValue + incrementValue).toFixed(2); // Increment and set the new value
             incrementField.value = ''; // Clear the increment field after applying
         }
+
+        // Fetch supplier data from the database
+        fetch('/get-suppliers')
+            .then(response => response.json())
+            .then(data => {
+                const supplierSelect = document.getElementById('editSupplier');
+                data.forEach(supplier => {
+                    const option = document.createElement('option');
+                    option.value = supplier.SupplierID;
+                    option.text = supplier.SupplierName;
+                    supplierSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching suppliers:', error));
 
         // Function to fetch indent details and populate the form
         function fetchIndentDetails(indentNo) {

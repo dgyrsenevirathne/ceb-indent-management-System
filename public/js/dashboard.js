@@ -53,7 +53,17 @@ function displayIndents(indents, page) {
         const date = new Date(indent.Date); // Create a Date object from the date string
         const formattedDate = date.toISOString().split('T')[0]; // Extract the date part (YYYY-MM-DD)
 
-        row.innerHTML = `
+        // Fetch supplier name from the database
+        fetch('/get-supplier-name', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ SupplierID: indent.Supplier })
+        })
+
+            .then(response => response.json())
+            .then(supplierName => {
+
+                row.innerHTML = `
          <td>${formattedDate}</td>
             <td>${indent.IndentNo}</td>
             <td>${indent.Currency}</td>
@@ -67,12 +77,13 @@ function displayIndents(indents, page) {
             <td>${indent.Commission}</td>
             <td>${indent.Total.toFixed(2)}</td>
             <td>
-            <button class="details" onclick="showDetails('${indent.ComplexRef}', '${indent.Item}', '${indent.Supplier}')">Details</button>
+            <button class="details" onclick="showDetails('${indent.ComplexRef}', '${indent.Item}', '${supplierName}')">Details</button>
                 <button class="edit" onclick="window.location.href='edit.html?indentNo=${encodeURIComponent(indent.IndentNo)}'">Edit</button>
 <button class="delete" onclick="deleteIndent('${indent.IndentNo}')">Delete</button>
             </td>
         `;
-        tableBody.appendChild(row);
+                tableBody.appendChild(row);
+            })
     }
 }
 

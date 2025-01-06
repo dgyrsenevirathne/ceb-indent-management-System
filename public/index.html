@@ -123,7 +123,9 @@
 
                 <div class="col">
                     <label for="supplier">Supplier:</label>
-                    <input type="text" id="supplier" name="supplier">
+                    <select id="supplier" name="supplier">
+                        <option value="">Select Supplier</option>
+                    </select>
                 </div>
             </div>
 
@@ -136,6 +138,7 @@
         </form>
     </div>
     <script src="js/script.js"></script>
+    <script src="js/supplier.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
     <script>
         flatpickr("#date", {

@@ -335,6 +335,31 @@ app.get('/get-conversion-rates', async (req, res) => {
     }
 });
 
+// Fetch suppliers from the database
+app.get('/get-suppliers', async (req, res) => {
+    try {
+        const query = 'SELECT SupplierID, SupplierName FROM Suppliers';
+        const results = await executeQuery(sqlConfig.connectionString, query);
+        res.json(results);
+    } catch (error) {
+        console.error('Error fetching suppliers:', error);
+        res.status(500).json({ error: 'Failed to fetch suppliers' });
+    }
+});
+
+// Fetch supplier name from the database
+app.post('/get-supplier-name', async (req, res) => {
+    try {
+        const { SupplierID } = req.body;
+        const query = 'SELECT SupplierName FROM Suppliers WHERE SupplierID = ?';
+        const result = await executeQuery(sqlConfig.connectionString, query, [SupplierID]);
+        res.json(result[0].SupplierName);
+    } catch (error) {
+        console.error('Error fetching supplier name:', error);
+        res.status(500).json({ error: 'Failed to fetch supplier name' });
+    }
+});
+
 
 // Start the server
 app.listen(3000, () => {
