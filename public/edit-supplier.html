@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Supplier</title>
+</head>
+
+<body>
+    <h1>Edit Supplier</h1>
+    <form id="edit-supplier-form">
+        <label for="supplier-name">Supplier Name:</label>
+        <input type="text" id="supplier-name" name="supplier-name">
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <script>
+        // Get the supplier ID from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const supplierID = urlParams.get('supplierID');
+
+        // Fetch the supplier data from the server
+        fetch(`/get-supplier/${supplierID}`)
+            .then(response => response.json())
+            .then(data => {
+                // Populate the form with the supplier data
+                document.getElementById('supplier-name').value = data.SupplierName;
+            })
+            .catch(error => console.error('Error fetching supplier data:', error));
+
+        // Handle the form submission
+        document.getElementById('edit-supplier-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get the updated supplier name
+            const supplierName = document.getElementById('supplier-name').value;
+
+            // Send the updated supplier data to the server
+            fetch(`/update-supplier/${supplierID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ supplierName })
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to update supplier');
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Supplier updated successfully!');
+                    window.opener.location.reload();
+                    window.close();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('There was a problem updating the supplier.');
+                });
+        });
+    </script>
+</body>
+
+</html>

@@ -53,6 +53,7 @@ function displaySuppliers(suppliers, page) {
             <td>${supplier.SupplierID}</td>
             <td>${supplier.SupplierName}</td>
              <td>
+                <button class="edit" onclick="editSupplier(${supplier.SupplierID})">Edit</button>
                 <button class="delete" onclick="deleteSupplier(${supplier.SupplierID})">Delete</button>
             </td>
         `;
@@ -168,5 +169,11 @@ function deleteSupplier(supplierID) {
             console.error('Error:', error);
             alert('There was a problem deleting the supplier.');
         });
+}
+
+// Function to edit a supplier
+function editSupplier(supplierID) {
+    // Open a new window or modal to edit the supplier
+    const editWindow = window.open('edit-supplier.html?supplierID=' + supplierID, '_blank', 'width=400,height=200');
 }
 

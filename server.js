@@ -430,6 +430,33 @@ app.delete('/delete-supplier', async (req, res) => {
     }
 });
 
+// Endpoint to get a supplier by ID
+app.get('/get-supplier/:supplierID', async (req, res) => {
+    const supplierID = req.params.supplierID;
+    try {
+        const query = 'SELECT * FROM [IndentManagement].[dbo].[Suppliers] WHERE SupplierID = ?';
+        const result = await executeQuery(sqlConfig.connectionString, query, [parseInt(supplierID)]);
+        res.json(result[0]);
+    } catch (error) {
+        console.error('Error fetching supplier:', error);
+        res.status(500).send('Server error');
+    }
+});
+
+// Endpoint to update a supplier
+app.put('/update-supplier/:supplierID', async (req, res) => {
+    const supplierID = req.params.supplierID;
+    const { supplierName } = req.body;
+    try {
+        const query = 'UPDATE [IndentManagement].[dbo].[Suppliers] SET SupplierName = ? WHERE SupplierID = ?';
+        await executeQuery(sqlConfig.connectionString, query, [supplierName, supplierID]);
+        res.status(200).json({ message: 'Supplier updated successfully' });
+    } catch (error) {
+        console.error('Error updating supplier:', error);
+        res.status(500).send('Server error');
+    }
+});
+
 
 // Start the server
 app.listen(3000, () => {
