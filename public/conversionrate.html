@@ -30,9 +30,48 @@
                 <!-- Data will be populated here -->
             </tbody>
         </table>
+        <h2>Add New Currency</h2>
+        <form id="addCurrencyForm">
+            <label for="newCurrency">Currency:</label>
+            <input type="text" id="newCurrency" name="newCurrency" required>
+            <label for="newConversionRate">Conversion Rate:</label>
+            <input type="number" id="newConversionRate" name="newConversionRate" step="0.01" required>
+            <button type="submit">Add New Currency</button>
+        </form>
     </div>
 
     <script src="js/conversionrate.js"></script>
+    <script>
+        // Add event listener to the form submission
+        document.getElementById('addCurrencyForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const newCurrency = document.getElementById('newCurrency').value.trim();
+            const newConversionRate = parseFloat(document.getElementById('newConversionRate').value) || 0;
+
+            // Send the data to the server
+            fetch('/add-currency', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ newCurrency, newConversionRate })
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('New currency added successfully!');
+                    location.reload(); // Refresh the page to reflect changes
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('There was a problem adding the new currency.');
+                });
+        });
+    </script>
 </body>
 
 </html>

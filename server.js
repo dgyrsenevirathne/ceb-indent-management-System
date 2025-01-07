@@ -360,6 +360,26 @@ app.post('/get-supplier-name', async (req, res) => {
     }
 });
 
+// Add new currency
+app.post('/add-currency', async (req, res) => {
+    try {
+        const { newCurrency, newConversionRate } = req.body;
+
+        // SQL query to insert new currency
+        const insertQuery = `
+            INSERT INTO [IndentManagement].[dbo].[CurrencyConversionRates]
+            ([Currency], [ConversionRate])
+            VALUES (?, ?)
+        `;
+        await executeQuery(sqlConfig.connectionString, insertQuery, [newCurrency, newConversionRate]);
+
+        res.status(201).send({ message: 'New currency added successfully!' });
+    } catch (err) {
+        console.error('Error adding new currency:', err);
+        res.status(500).send({ error: 'Internal server error' });
+    }
+});
+
 
 // Start the server
 app.listen(3000, () => {
