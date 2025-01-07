@@ -30,19 +30,32 @@
             <tbody id="conversionRateTableBody">
                 <!-- Data will be populated here -->
             </tbody>
-        </table>
-        <h2>Add New Currency</h2>
-        <form id="addCurrencyForm">
-            <label for="newCurrency">Currency:</label>
-            <input type="text" id="newCurrency" name="newCurrency" required>
-            <label for="newConversionRate">Conversion Rate:</label>
-            <input type="number" id="newConversionRate" name="newConversionRate" step="0.01" required>
-            <button type="submit">Add New Currency</button>
-        </form>
+        </table></br>
+        <button id="addCurrencyButton">Add New Currency</button>
+        <div id="addCurrencyFormContainer" style="display: none;">
+            <h2>Add New Currency</h2>
+            <form id="addCurrencyForm">
+                <label for="newCurrency">Currency:</label>
+                <input type="text" id="newCurrency" name="newCurrency" required>
+                <label for="newConversionRate">Conversion Rate:</label>
+                <input type="number" id="newConversionRate" name="newConversionRate" step="0.01" required>
+                <button type="submit">Add New Currency</button>
+            </form>
+        </div>
     </div>
 
     <script src="js/conversionrate.js"></script>
     <script>
+        // Add event listener to the button to show the form
+        document.getElementById('addCurrencyButton').addEventListener('click', function () {
+            const formContainer = document.getElementById('addCurrencyFormContainer');
+            if (formContainer.style.display === 'block') {
+                formContainer.style.display = 'none';
+            } else {
+                formContainer.style.display = 'block';
+            }
+        });
+
         // Add event listener to the form submission
         document.getElementById('addCurrencyForm').addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent default form submission
