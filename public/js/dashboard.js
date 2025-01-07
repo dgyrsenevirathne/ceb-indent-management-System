@@ -1,5 +1,5 @@
 let currentPage = 1;
-const recordsPerPage = 10; // Number of records to display per page
+const recordsPerPage = 15; // Number of records to display per page
 let allIndents = []; // Store all indents for filtering and pagination
 
 // Debounce function to limit the rate at which a function can fire

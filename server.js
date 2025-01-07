@@ -152,7 +152,7 @@ app.post('/add-indent', async (req, res) => {
 // Fetch all indents with pagination and search
 app.get('/get-indents', async (req, res) => {
     try {
-        const { page = 1, limit = 10, searchTerm = '' } = req.query;
+        const { page = 1, limit = 1000, searchTerm = '' } = req.query;
         const offset = (page - 1) * limit;
         const searchQuery = `%${searchTerm}%`;
 
