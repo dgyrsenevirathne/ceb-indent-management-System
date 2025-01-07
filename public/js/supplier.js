@@ -2,12 +2,16 @@
 fetch('/get-suppliers')
     .then(response => response.json())
     .then(data => {
-        const supplierSelect = document.getElementById('supplier');
+        const supplierTableBody = document.getElementById('supplierTableBody');
+        supplierTableBody.innerHTML = ''; // Clear existing rows
+
         data.forEach(supplier => {
-            const option = document.createElement('option');
-            option.value = supplier.SupplierID;
-            option.text = supplier.SupplierName;
-            supplierSelect.appendChild(option);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${supplier.SupplierID}</td>
+                <td>${supplier.SupplierName}</td>
+            `;
+            supplierTableBody.appendChild(row);
         });
     })
     .catch(error => console.error('Error fetching suppliers:', error));

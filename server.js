@@ -380,6 +380,18 @@ app.post('/add-currency', async (req, res) => {
     }
 });
 
+// Fetch suppliers from the database
+app.get('/get-suppliers', async (req, res) => {
+    try {
+        const query = 'SELECT SupplierID, SupplierName FROM Suppliers';
+        const results = await executeQuery(sqlConfig.connectionString, query);
+        res.json(results);
+    } catch (error) {
+        console.error('Error fetching suppliers:', error);
+        res.status(500).json({ error: 'Failed to fetch suppliers' });
+    }
+});
+
 
 // Start the server
 app.listen(3000, () => {
