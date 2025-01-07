@@ -52,6 +52,9 @@ function displaySuppliers(suppliers, page) {
         row.innerHTML = `
             <td>${supplier.SupplierID}</td>
             <td>${supplier.SupplierName}</td>
+             <td>
+                <button class="delete" onclick="deleteSupplier(${supplier.SupplierID})">Delete</button>
+            </td>
         `;
         tableBody.appendChild(row);
     }
@@ -96,6 +99,74 @@ function fetchSuppliers() {
             allSuppliers = data; // Store all suppliers for filtering and pagination
             displaySuppliers(allSuppliers, 1); // Reset to first page
             setupPagination(allSuppliers.length);
+            getNextSupplierID();
         })
         .catch(error => console.error('Error fetching suppliers:', error));
 }
+
+// Function to get the next supplier ID
+function getNextSupplierID() {
+    fetch('/get-next-supplier-id')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('supplierID').value = data.nextID;
+        })
+        .catch(error => console.error('Error getting next supplier ID:', error));
+}
+
+// Add event listener to the form submission
+document.getElementById('addSupplierForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const supplierName = document.getElementById('supplierName').value.trim(); // Trim spaces
+    const supplierID = document.getElementById('supplierID').value;
+
+    // Send the data to the server
+    fetch('/add-supplier', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ supplierID, supplierName })
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            alert('Supplier added successfully!');
+            location.reload(); // Refresh the page to reflect changes
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('There was a problem adding the supplier.');
+        });
+});
+
+// Function to delete a supplier
+function deleteSupplier(supplierID) {
+    if (!confirm('Are you sure you want to delete this supplier?')) return;
+
+    fetch('/delete-supplier', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ supplierID })
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to delete supplier');
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            alert('Supplier deleted successfully!');
+            location.reload(); // Refresh the page to reflect changes
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('There was a problem deleting the supplier.');
+        });
+}
+

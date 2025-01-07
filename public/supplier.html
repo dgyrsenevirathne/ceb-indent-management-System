@@ -33,6 +33,7 @@
                     <tr>
                         <th>Supplier ID</th>
                         <th>Supplier Name</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="supplierTableBody">
@@ -40,6 +41,14 @@
                 </tbody>
             </table>
         </div>
+        <h2>Add New Supplier</h2>
+        <form id="addSupplierForm">
+            <label for="supplierID">Supplier ID:</label>
+            <input type="number" id="supplierID" name="supplierID" readonly>
+            <label for="supplierName">Supplier Name:</label>
+            <input type="text" id="supplierName" name="supplierName" required size="110">
+            <button type="submit">Add Supplier</button>
+        </form>
     </div>
 
     <script src="js/supplierdashboard.js"></script>

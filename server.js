@@ -392,6 +392,44 @@ app.get('/get-suppliers', async (req, res) => {
     }
 });
 
+// Fetch next supplier ID
+app.get('/get-next-supplier-id', async (req, res) => {
+    try {
+        const query = 'SELECT MAX ([SupplierID]) + 1 AS nextID FROM [IndentManagement].[dbo].[Suppliers]';
+        const result = await executeQuery(sqlConfig.connectionString, query);
+        res.json({ nextID: result[0].nextID });
+    } catch (error) {
+        console.error('Error fetching next supplier ID:', error);
+        res.status(500).send('Server error');
+    }
+});
+
+// Endpoint to add a new supplier
+app.post('/add-supplier', async (req, res) => {
+    const { supplierID, supplierName } = req.body;
+    try {
+        const query = 'INSERT INTO [IndentManagement].[dbo].[Suppliers] (SupplierID, SupplierName) VALUES (?, ?)';
+        await executeQuery(sqlConfig.connectionString, query, [supplierID, supplierName]);
+        res.status(201).json({ message: 'Supplier added successfully' });
+    } catch (error) {
+        console.error('Error adding supplier:', error);
+        res.status(500).send('Server error');
+    }
+});
+
+// Endpoint to delete a supplier
+app.delete('/delete-supplier', async (req, res) => {
+    const { supplierID } = req.body;
+    try {
+        const query = 'DELETE FROM [IndentManagement].[dbo].[Suppliers] WHERE SupplierID = ?';
+        await executeQuery(sqlConfig.connectionString, query, [supplierID]);
+        res.status(200).json({ message: 'Supplier deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting supplier:', error);
+        res.status(500).send('Server error');
+    }
+});
+
 
 // Start the server
 app.listen(3000, () => {
