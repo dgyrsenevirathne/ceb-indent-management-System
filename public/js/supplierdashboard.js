@@ -122,6 +122,7 @@ document.getElementById('addSupplierForm').addEventListener('submit', function (
     const supplierName = document.getElementById('supplierName').value.trim(); // Trim spaces
     const supplierID = document.getElementById('supplierID').value;
 
+
     // Send the data to the server
     fetch('/add-supplier', {
         method: 'POST',
@@ -143,6 +144,26 @@ document.getElementById('addSupplierForm').addEventListener('submit', function (
             console.error('Error:', error);
             alert('There was a problem adding the supplier.');
         });
+});
+
+// Add event listener to the button for toggling the form display
+const addSupplierButton = document.getElementById('addSupplierButton');
+const addSupplierFormContainer = document.getElementById('addSupplierFormContainer');
+
+// Create a new supplier object
+const newSupplier = {
+    SupplierID: supplierID,
+    SupplierName: supplierName
+};
+
+// Add event listener to the button
+addSupplierButton.addEventListener('click', function () {
+    // Toggle the display of the form container
+    if (addSupplierFormContainer.style.display === 'block') {
+        addSupplierFormContainer.style.display = 'none';
+    } else {
+        addSupplierFormContainer.style.display = 'block';
+    }
 });
 
 // Function to delete a supplier
